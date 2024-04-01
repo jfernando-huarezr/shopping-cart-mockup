@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import ErrorPage from "./ErrorPage";
+import Home from "./components/Home/Home.jsx";
+import Marketplace from "./components/Marketplace/Marketplace.jsx";
+import About from "./components/About/About.jsx";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -8,6 +11,20 @@ const Router = () => {
       path: "/",
       element: <App />,
       errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "home",
+          element: <Home />,
+        },
+        {
+          path: "marketplace",
+          element: <Marketplace />,
+        },
+        {
+          path: "about",
+          element: <About />,
+        },
+      ],
     },
     /*     {
       path: "marketplace",
