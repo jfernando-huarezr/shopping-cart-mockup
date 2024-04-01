@@ -4,6 +4,7 @@ import ErrorPage from "./ErrorPage";
 import Home from "./components/Home/Home.jsx";
 import Marketplace from "./components/Marketplace/Marketplace.jsx";
 import About from "./components/About/About.jsx";
+import Cart from "./components/Cart/Cart.jsx";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -13,7 +14,7 @@ const Router = () => {
       errorElement: <ErrorPage />,
       children: [
         {
-          path: "home",
+          index: true,
           element: <Home />,
         },
         {
@@ -23,6 +24,10 @@ const Router = () => {
         {
           path: "about",
           element: <About />,
+        },
+        {
+          path: "cart",
+          element: <Cart />,
         },
       ],
     },

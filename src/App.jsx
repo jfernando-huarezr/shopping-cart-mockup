@@ -1,6 +1,7 @@
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Footer from "./components/Footer/Footer";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         data-testid="main"
         className="grow flex items-center justify-center"
       >
-        <Home />
+        <Outlet />
       </main>
       <Footer />
     </div>
