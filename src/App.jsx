@@ -1,20 +1,20 @@
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import { Outlet } from "react-router-dom";
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="flex min-h-screen flex-col justify-between">
       <Header />
       <main
         data-testid="main"
-        className="grow flex items-center justify-center"
+        className="flex grow items-center justify-center"
       >
         <Outlet />
       </main>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
