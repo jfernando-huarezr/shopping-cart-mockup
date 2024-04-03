@@ -9,8 +9,8 @@ const Header = () => {
     setShowNav((prev) => !prev)
   }
   return (
-    <header data-testid="header">
-      <nav className="border-gray-200 bg-white px-4 py-2.5 lg:px-6 dark:bg-gray-800">
+    <header data-testid="header w-full sticky relative">
+      <nav className="absolute left-0 top-0 w-full border-gray-200 bg-white px-4 py-2.5 lg:px-6 dark:bg-gray-800">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
           <Link to="/" className="flex items-center">
             <img
@@ -75,7 +75,7 @@ const Header = () => {
           </div>
           <div
             className={`${
-              showNav ? 'visible' : 'hidden'
+              showNav ? 'hidden' : 'visible'
             } w-full items-center justify-between lg:order-1 lg:flex lg:w-auto`}
             id="mobile-menu-2"
           >

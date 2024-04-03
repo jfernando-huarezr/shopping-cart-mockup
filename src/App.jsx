@@ -8,10 +8,11 @@ function App() {
       <Header />
       <main
         data-testid="main"
-        className="flex grow items-center justify-center"
+        className="flex w-full grow flex-col bg-gradient-to-r from-yellow-200 to-green-200"
       >
         <Outlet />
       </main>
+
       <Footer />
     </div>
   )

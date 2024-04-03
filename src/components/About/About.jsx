@@ -1,5 +1,9 @@
 const About = () => {
-  return <div>Im the About!</div>;
-};
+  return (
+    <main data-testid="main" className="flex grow items-center justify-center">
+      <section>I&apos;m the about</section>;
+    </main>
+  )
+}
 
-export default About;
+export default About
