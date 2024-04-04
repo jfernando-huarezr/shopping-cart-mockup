@@ -1,16 +1,18 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import useComponentVisible from '../../hooks/useComponentVisible'
 
 const Header = () => {
-  const [showNav, setShowNav] = useState(false)
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useComponentVisible(false)
 
   const handleToggleNav = (e) => {
     e.preventDefault()
-    setShowNav((prev) => !prev)
+    setIsComponentVisible(!isComponentVisible)
   }
+
   return (
-    <header data-testid="header w-full sticky relative">
-      <nav className="absolute left-0 top-0 w-full border-gray-200 bg-white px-4 py-2.5 lg:px-6 dark:bg-gray-800">
+    <header data-testid="header" className="relative sticky top-0 z-10 w-full">
+      <nav className="w-full border-gray-200 bg-white px-4 py-2.5 lg:px-6 dark:bg-gray-800">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
           <Link to="/" className="flex items-center">
             <img
@@ -22,7 +24,35 @@ const Header = () => {
               Tambo Mockup
             </span>
           </Link>
-          <div className="flex items-center lg:order-2">
+          <ul className="hidden flex-row gap-10 font-medium lg:flex">
+            <li>
+              <Link
+                to="/"
+                className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-blue-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                aria-current="page"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/marketplace"
+                className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-blue-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+              >
+                Marketplace
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/about"
+                className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-blue-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+              >
+                About Us
+              </Link>
+            </li>
+          </ul>
+          <div className="flex items-center">
             <div className="relative">
               <Link
                 to="/cart"
@@ -73,43 +103,44 @@ const Header = () => {
               </svg>
             </button>
           </div>
-          <div
-            className={`${
-              showNav ? 'hidden' : 'visible'
-            } w-full items-center justify-between lg:order-1 lg:flex lg:w-auto`}
-            id="mobile-menu-2"
-          >
-            <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">
-              <li>
-                <Link
-                  to="/"
-                  className="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white lg:bg-transparent lg:p-0 lg:text-blue-700 dark:text-white"
-                  aria-current="page"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/marketplace"
-                  className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-blue-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
-                >
-                  Marketplace
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  to="/about"
-                  className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-blue-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
-                >
-                  About Us
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
       </nav>
+      <div
+        className={`${
+          isComponentVisible ? 'visible' : 'hidden'
+        } absolute w-full items-center justify-between border-gray-200 bg-white px-4 py-2.5 lg:hidden lg:px-6 dark:bg-gray-800`}
+        id="mobile-menu-2"
+        ref={ref}
+      >
+        <ul className="flex flex-col font-medium">
+          <li onClick={handleToggleNav}>
+            <Link
+              to="/"
+              className="block rounded bg-blue-700 py-2 pl-3 pr-4 text-white lg:bg-transparent lg:p-0 lg:text-blue-700 dark:text-white"
+              aria-current="page"
+            >
+              Home
+            </Link>
+          </li>
+          <li onClick={handleToggleNav}>
+            <Link
+              to="/marketplace"
+              className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-blue-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+            >
+              Marketplace
+            </Link>
+          </li>
+
+          <li onClick={handleToggleNav}>
+            <Link
+              to="/about"
+              className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-blue-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+            >
+              About Us
+            </Link>
+          </li>
+        </ul>
+      </div>
     </header>
   )
 }

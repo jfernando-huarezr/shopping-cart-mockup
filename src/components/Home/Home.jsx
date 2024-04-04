@@ -1,6 +1,12 @@
+import { useNavigate } from 'react-router-dom'
 import img from '../../assets/banner.jpeg'
 
 const Home = () => {
+  const navigateMarket = useNavigate()
+
+  const handleButtonHome = () => {
+    navigateMarket('/marketplace')
+  }
   return (
     <>
       <section className="flex w-full items-center justify-center">
@@ -11,7 +17,10 @@ const Home = () => {
               laborum hic cupiditate at possimus. Quam omnis accusamus alias
               neque velit.
             </h1>
-            <button className="rounded-2 bg-gray-300 px-5 py-2">
+            <button
+              onClick={handleButtonHome}
+              className="rounded-lg bg-gray-300 px-5 py-2 hover:bg-blue-400"
+            >
               im a great button
             </button>
           </div>
