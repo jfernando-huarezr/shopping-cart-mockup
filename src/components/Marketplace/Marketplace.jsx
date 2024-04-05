@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import ProductCard from '../ProductCard/ProductCard'
 
 const Marketplace = () => {
   const [products, setProducts] = useState(null)
+  const setCartCounter = useOutletContext()
 
   useEffect(() => {
     async function getProducts() {
@@ -25,11 +27,16 @@ const Marketplace = () => {
     <section>
       <div className="container mx-auto">
         <h1 className="pt-5 text-center">I&apos;m the marketplace</h1>
-        {!products ? (
-          <div>Loading...</div>
-        ) : (
-          products.map((element) => <ProductCard />)
-        )}
+
+        <div className="align-start grid-cols-auto-fill grid justify-center justify-items-center gap-5 py-10">
+          {!products ? (
+            <div>Loading...</div>
+          ) : (
+            products.map((element) => (
+              <ProductCard setCartCounter={setCartCounter} />
+            ))
+          )}
+        </div>
       </div>
     </section>
   )

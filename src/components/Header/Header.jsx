@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import useComponentVisible from '../../hooks/useComponentVisible'
 
-const Header = () => {
+const Header = ({ cartCounter }) => {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false)
 
@@ -60,13 +60,15 @@ const Header = () => {
               >
                 Shop Cart
               </Link>
-              <div
-                className="absolute -top-2 right-0 inline-flex hidden h-5 w-5  
+              {cartCounter > 0 && (
+                <div
+                  className="absolute -top-2 right-0 inline-flex h-5 w-5  
                 items-center justify-center rounded-full  
                 bg-white text-xs font-bold text-gray-700 lg:text-sm"
-              >
-                0
-              </div>
+                >
+                  {cartCounter}
+                </div>
+              )}
             </div>
 
             <button

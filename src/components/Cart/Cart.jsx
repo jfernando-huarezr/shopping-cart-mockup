@@ -1,5 +1,5 @@
 const Cart = () => {
-  return <section>I&apos;m the cart</section>
+  return <section>Your cart is Empty!</section>
 }
 
 export default Cart
