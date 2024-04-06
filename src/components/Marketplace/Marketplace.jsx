@@ -33,7 +33,7 @@ const Marketplace = () => {
             <div>Loading...</div>
           ) : (
             products.map((element) => (
-              <ProductCard setCartCounter={setCartCounter} />
+              <ProductCard setCartCounter={setCartCounter} detail={element} />
             ))
           )}
         </div>
