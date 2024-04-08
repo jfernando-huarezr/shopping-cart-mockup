@@ -51,7 +51,7 @@ const ProductCard = (props) => {
 
         {isComponentVisible && (
           <Modal>
-            <div className="bg-neutral-50 p-5" ref={ref}>
+            <div className="w-[90%] bg-neutral-50 p-5 lg:w-1/2" ref={ref}>
               <ProductDetailCard detail={detail}></ProductDetailCard>
             </div>
           </Modal>
