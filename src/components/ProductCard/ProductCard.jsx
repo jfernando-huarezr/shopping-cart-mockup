@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Modal from '../Modal/Modal'
 import useComponentVisible from '../../hooks/useComponentVisible'
+import ProductDetailCard from '../ProductDetailCard.jsx/ProductDetailCard'
 
 const ProductCard = (props) => {
   const detail = props.detail
@@ -44,14 +45,14 @@ const ProductCard = (props) => {
             href="#"
             className="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Buy
+            Add to Cart
           </button>
         </div>
 
         {isComponentVisible && (
           <Modal>
             <div className="bg-neutral-50 p-5" ref={ref}>
-              Whats happening here in the modal?
+              <ProductDetailCard detail={detail}></ProductDetailCard>
             </div>
           </Modal>
         )}
