@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Modal from '../Modal/Modal'
 import useComponentVisible from '../../hooks/useComponentVisible'
 import ProductDetailCard from '../ProductDetailCard.jsx/ProductDetailCard'
@@ -8,34 +8,52 @@ const ProductCard = (props) => {
   const detail = props.detail
   const setCartCounter = props.setCartCounter
   const setItemsCart = props.setItemsCart
-  const [isDisabled, setIsDisabled] = useState(false)
+  const [isIncorrect, setIsIncorrect] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false)
 
-  const handleProductQuantity = (e) => {
+  const maxItems = 100
+  const minItems = 1
+
+  const handleIncrement = (e) => {
     e.preventDefault()
-    setIsDisabled((prev) => !prev)
-    const dataQuantity = e.target.dataset.quantity
-    dataQuantity === 'increment'
-      ? setQuantity((prev) => prev + 1)
-      : setQuantity((prev) => prev - 1)
+    if (quantity >= maxItems) {
+      setIsIncorrect(true)
+      return
+    }
+    setIsIncorrect(false)
+    setQuantity((prev) => prev + 1)
+  }
+
+  const handleDecrement = (e) => {
+    e.preventDefault()
+    if (quantity <= minItems) {
+      setIsIncorrect(true)
+      return
+    }
+    setIsIncorrect(false)
+    setQuantity((prev) => prev - 1)
   }
 
   const handleAddCart = (e) => {
     e.preventDefault()
-    console.log(quantity)
-    if (quantity < 1 || quantity > 999) {
-      console.log('quantity incorrect')
+    if (quantity < minItems || quantity > maxItems) {
       return
     }
     setCartCounter((prev) => prev + quantity)
+    setQuantity(1)
     setIsComponentVisible((prev) => !prev)
   }
 
   const handleChangeValue = (e) => {
     e.preventDefault()
-    setQuantity(e.target.value)
+    const inputValue = e.target.value
+    // Remove leading zeros and convert to an integer
+    const intValue = parseInt(inputValue, 10)
+    // Handle NaN (non-numeric) values
+    const sanitizedValue = isNaN(intValue) ? '' : intValue
+    setQuantity(sanitizedValue)
   }
 
   const handleModalProduct = (e) => {
@@ -110,14 +128,10 @@ const ProductCard = (props) => {
                 >
                   Choose quantity:
                 </label>
-                <p className="mb-4 text-red-600">
-                  Set a correct quantity value!
-                </p>
                 <div className="relative flex max-w-[8rem] items-center">
                   <button
-                    onClick={handleProductQuantity}
+                    onClick={handleDecrement}
                     className="h-11 rounded-s-lg border border-gray-300 bg-gray-100 p-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100"
-                    data-quantity="decrement"
                   >
                     <svg
                       className="h-3 w-3 text-gray-900"
@@ -136,21 +150,17 @@ const ProductCard = (props) => {
                     </svg>
                   </button>
                   <input
-                    type="number"
+                    type="text"
                     aria-describedby="helper-text-explanation"
                     className="block h-11 w-full border-x-0 border-gray-300 bg-gray-50 py-2.5 text-center text-sm [appearance:textfield] focus:border-blue-500 focus:ring-blue-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     value={quantity}
                     onChange={handleChangeValue}
                     placeholder="1"
-                    min="1"
-                    max="999"
-                    required
                     pattern="^[0-9]*$"
                   />
                   <button
-                    onClick={handleProductQuantity}
+                    onClick={handleIncrement}
                     className="h-11 rounded-e-lg border border-gray-300 bg-gray-100 p-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100"
-                    data-quantity="increment"
                   >
                     <svg
                       className="h-3 w-3 text-gray-900"
@@ -169,6 +179,11 @@ const ProductCard = (props) => {
                     </svg>
                   </button>
                 </div>
+                {isIncorrect && (
+                  <p className="mb-4 text-red-600">
+                    Set a quantity value between 0-999!
+                  </p>
+                )}
               </div>
 
               <button
