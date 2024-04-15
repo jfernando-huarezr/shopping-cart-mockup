@@ -6,42 +6,69 @@ import { type } from '@testing-library/user-event/dist/cjs/utility/type.js'
 
 const ProductCard = (props) => {
   const detail = props.detail
-  const setCartCounter = props.setCartCounter
+  const itemsCart = props.itemsCart
   const setItemsCart = props.setItemsCart
-  const [isIncorrect, setIsIncorrect] = useState(false)
+  const [existingItem, setExistingItem] = useState(undefined)
+  const [isIncorrect, setIsIncorrect] = useState(true)
+  const [isFull, setIsFull] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false)
 
-  const maxItems = 100
+  const maxItems = 25
   const minItems = 1
+
+  useEffect(() => {
+    if (quantity > maxItems || quantity < minItems) setIsIncorrect(true)
+    else setIsIncorrect(false)
+
+    if (existingItem !== undefined) {
+      if (existingItem.quantity + quantity > maxItems) {
+        setIsFull(true)
+      } else setIsFull(false)
+    } else setIsFull(false)
+  }, [quantity])
+
+  useEffect(() => {
+    const existingItem = itemsCart.find((item) => item.id === detail.id)
+    setExistingItem(existingItem)
+  }, [itemsCart, detail.id])
 
   const handleIncrement = (e) => {
     e.preventDefault()
-    if (quantity >= maxItems) {
+    if (quantity == maxItems) {
       setIsIncorrect(true)
       return
     }
+
     setIsIncorrect(false)
     setQuantity((prev) => prev + 1)
   }
 
   const handleDecrement = (e) => {
     e.preventDefault()
-    if (quantity <= minItems) {
+    e.preventDefault()
+    if (quantity == minItems) {
       setIsIncorrect(true)
       return
     }
-    setIsIncorrect(false)
     setQuantity((prev) => prev - 1)
   }
 
   const handleAddCart = (e) => {
     e.preventDefault()
-    if (quantity < minItems || quantity > maxItems) {
-      return
+    if (isIncorrect || isFull) return
+
+    if (existingItem !== undefined) {
+      const updatedItems = itemsCart.map((item) => {
+        return item.id === existingItem.id
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      })
+      setItemsCart(updatedItems)
+    } else {
+      setItemsCart([...itemsCart, { ...detail, quantity }])
     }
-    setCartCounter((prev) => prev + quantity)
     setQuantity(1)
     setIsComponentVisible((prev) => !prev)
   }
@@ -51,7 +78,7 @@ const ProductCard = (props) => {
     const inputValue = e.target.value
     // Remove leading zeros and convert to an integer
     const intValue = parseInt(inputValue, 10)
-    // Handle NaN (non-numeric) values
+    // Handle NaN
     const sanitizedValue = isNaN(intValue) ? '' : intValue
     setQuantity(sanitizedValue)
   }
@@ -59,6 +86,7 @@ const ProductCard = (props) => {
   const handleModalProduct = (e) => {
     e.preventDefault()
     setQuantity(1)
+    setIsFull(false)
     setIsComponentVisible((prev) => !prev)
   }
 
@@ -96,7 +124,7 @@ const ProductCard = (props) => {
         {isComponentVisible && (
           <Modal>
             <div
-              className="relative mb-6 flex w-[90%] flex-wrap rounded-lg bg-white p-8 shadow-md sm:flex-nowrap sm:gap-10 lg:w-1/3"
+              className="relative mb-6 flex w-[90%] flex-wrap rounded-lg bg-white p-8 shadow-md sm:flex-nowrap sm:gap-10 md:w-1/2 lg:w-[60%] xl:w-[50%] 2xl:w-[40%]"
               ref={ref}
             >
               <div className="flex h-60 basis-full justify-center sm:basis-1/2">
@@ -107,7 +135,7 @@ const ProductCard = (props) => {
                 />
               </div>
 
-              <div className="sm:basis-1/2">
+              <div className="flex flex-col justify-between sm:basis-1/2">
                 <div className="sm:flex sm:w-full sm:justify-between sm:gap-4">
                   <div className="mt-5 sm:mt-0">
                     <h2 className="text-lg font-bold text-gray-900">
@@ -180,18 +208,23 @@ const ProductCard = (props) => {
                   </button>
                 </div>
                 {isIncorrect && (
-                  <p className="mb-4 text-red-600">
-                    Set a quantity value between 0-999!
+                  <p className="mb-2 text-red-600">
+                    Set a quantity value between {minItems} and {maxItems}.
                   </p>
                 )}
-              </div>
+                {isFull && (
+                  <p className="mb-2 text-red-600">
+                    You can only have {maxItems} items in the cart.
+                  </p>
+                )}
 
-              <button
-                onClick={handleAddCart}
-                className="absolute bottom-5 right-5 rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Add to Cart
-              </button>
+                <button
+                  onClick={handleAddCart}
+                  className="mt-3 rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </Modal>
         )}

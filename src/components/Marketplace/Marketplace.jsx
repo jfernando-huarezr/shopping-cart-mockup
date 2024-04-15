@@ -4,7 +4,7 @@ import ProductCard from '../ProductCard/ProductCard'
 
 const Marketplace = () => {
   const [products, setProducts] = useState(null)
-  const [setCartCounter, setItemsCart] = useOutletContext()
+  const [itemsCart, setItemsCart] = useOutletContext()
 
   useEffect(() => {
     async function getProducts() {
@@ -19,10 +19,6 @@ const Marketplace = () => {
     getProducts()
   }, [])
 
-  useEffect(() => {
-    console.log(products)
-  }, [products])
-
   return (
     <section>
       <div className="container mx-auto">
@@ -35,8 +31,8 @@ const Marketplace = () => {
             products.map((element) => (
               <ProductCard
                 key={element.id}
-                setCartCounter={setCartCounter}
                 setItemsCart={setItemsCart}
+                itemsCart={itemsCart}
                 detail={element}
               />
             ))
