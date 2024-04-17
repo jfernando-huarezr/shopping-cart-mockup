@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import Modal from '../Modal/Modal'
 import useComponentVisible from '../../hooks/useComponentVisible'
-import ProductDetailCard from '../ProductDetailCard.jsx/ProductDetailCard'
 import { type } from '@testing-library/user-event/dist/cjs/utility/type.js'
 
 const ProductCard = (props) => {
@@ -214,7 +213,7 @@ const ProductCard = (props) => {
                 )}
                 {isFull && (
                   <p className="mb-2 text-red-600">
-                    You can only have {maxItems} items in the cart.
+                    The max is {maxItems} units of this item.
                   </p>
                 )}
 
