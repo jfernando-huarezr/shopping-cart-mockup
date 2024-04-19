@@ -107,9 +107,10 @@ const ProductCardShopCart = (props) => {
             </button>
             <input
               type="text"
-              className="aspect-square w-10 rounded-full border border-gray-200 bg-gray-100 px-3 py-1.5 text-center text-sm font-semibold text-gray-900  outline-none"
+              className="aspect-square w-10 rounded-full border border-gray-200 bg-gray-100 py-1.5 text-center text-sm font-semibold text-gray-900  outline-none"
               placeholder="2"
               value={quantity}
+              readOnly
             />
             <button
               className={`group flex items-center justify-center rounded-[50px] border border-gray-200 ${isIncorrect ? 'bg-red-600' : 'bg-white'} p-2.5 shadow-sm shadow-transparent transition-all duration-500 focus-within:outline-gray-300 hover:border-gray-300 hover:${isIncorrect ? 'bg-red-200' : 'bg-gray-50'} hover:shadow-gray-200`}
@@ -133,9 +134,14 @@ const ProductCardShopCart = (props) => {
               </svg>
             </button>
           </div>
-          <h6 className="font-manrope text-right text-2xl font-bold leading-9 text-indigo-600">
-            ${element.price * quantity}
-          </h6>
+          <div>
+            <h6 className="font-manrope text-right text-xs font-bold leading-9 text-blue-600">
+              Unit price: ${element.price}
+            </h6>
+            <h6 className="font-manrope text-right text-2xl font-bold leading-9 text-blue-600">
+              ${(element.price * quantity).toFixed(2)}
+            </h6>
+          </div>
         </div>
       </div>
     </div>

@@ -8,7 +8,9 @@ const ProductCard = (props) => {
   const itemsCart = props.itemsCart
   const setItemsCart = props.setItemsCart
   const [existingItem, setExistingItem] = useState(undefined)
-  const [isIncorrect, setIsIncorrect] = useState(true)
+  const [tooLow, setTooLow] = useState(false)
+  const [tooHigh, setTooHigh] = useState(false)
+  const [isIncorrect, setIsIncorrect] = useState(false)
   const [isFull, setIsFull] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const { ref, isComponentVisible, setIsComponentVisible } =
@@ -18,58 +20,40 @@ const ProductCard = (props) => {
   const minItems = 1
 
   useEffect(() => {
-    if (quantity > maxItems || quantity < minItems) setIsIncorrect(true)
-    else setIsIncorrect(false)
+    setTooHigh(false)
+    setTooLow(false)
 
-    if (existingItem !== undefined) {
-      if (existingItem.quantity + quantity > maxItems) {
-        setIsFull(true)
-      } else setIsFull(false)
-    } else setIsFull(false)
+    quantity > maxItems || quantity < minItems
+      ? setIsIncorrect(true)
+      : setIsIncorrect(false)
+
+    quantity > maxItems ? setIsFull(true) : setIsFull(false)
   }, [quantity])
 
   useEffect(() => {
     const existingItem = itemsCart.find((item) => item.id === detail.id)
-    setExistingItem(existingItem)
-  }, [itemsCart, detail.id])
+    if (existingItem !== undefined) {
+      setExistingItem(existingItem)
+      setQuantity(existingItem.quantity)
+    }
+  }, [itemsCart, detail.id, isComponentVisible])
 
   const handleIncrement = (e) => {
     e.preventDefault()
-    if (quantity == maxItems) {
-      setIsIncorrect(true)
+    if (quantity >= maxItems) {
+      setIsFull(true)
       return
     }
-
-    setIsIncorrect(false)
     setQuantity((prev) => prev + 1)
   }
 
   const handleDecrement = (e) => {
     e.preventDefault()
-    e.preventDefault()
-    if (quantity == minItems) {
-      setIsIncorrect(true)
+    if (quantity <= minItems) {
+      setTooLow(true)
       return
     }
     setQuantity((prev) => prev - 1)
-  }
-
-  const handleAddCart = (e) => {
-    e.preventDefault()
-    if (isIncorrect || isFull) return
-
-    if (existingItem !== undefined) {
-      const updatedItems = itemsCart.map((item) => {
-        return item.id === existingItem.id
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
-      })
-      setItemsCart(updatedItems)
-    } else {
-      setItemsCart([...itemsCart, { ...detail, quantity }])
-    }
-    setQuantity(1)
-    setIsComponentVisible((prev) => !prev)
   }
 
   const handleChangeValue = (e) => {
@@ -82,10 +66,27 @@ const ProductCard = (props) => {
     setQuantity(sanitizedValue)
   }
 
+  const handleAddCart = (e) => {
+    e.preventDefault()
+    if (isIncorrect) return
+
+    if (existingItem !== undefined) {
+      const updatedItems = itemsCart.map((item) => {
+        return item.id === existingItem.id
+          ? { ...item, quantity: quantity }
+          : item
+      })
+      setItemsCart(updatedItems)
+    } else {
+      setItemsCart([...itemsCart, { ...detail, quantity }])
+    }
+    setIsComponentVisible((prev) => !prev)
+  }
+
   const handleModalProduct = (e) => {
     e.preventDefault()
-    setQuantity(1)
-    setIsFull(false)
+    setTooHigh(false)
+    setTooLow(false)
     setIsComponentVisible((prev) => !prev)
   }
 
@@ -100,11 +101,9 @@ const ProductCard = (props) => {
           />
         </div>
 
-        <a href="#">
-          <h5 className="line-clamp-2 text-ellipsis text-xl font-semibold tracking-tight text-gray-900">
-            {detail.title}
-          </h5>
-        </a>
+        <h5 className="line-clamp-2 text-ellipsis text-xl font-semibold tracking-tight text-gray-900">
+          {detail.title}
+        </h5>
 
         <div className="flex items-center justify-between">
           <span className="text-3xl font-bold text-gray-900">
@@ -114,7 +113,7 @@ const ProductCard = (props) => {
           <button
             onClick={handleModalProduct}
             href="#"
-            className="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
           >
             Buy
           </button>
@@ -206,14 +205,15 @@ const ProductCard = (props) => {
                     </svg>
                   </button>
                 </div>
-                {isIncorrect && (
+                {(tooHigh || tooLow || isIncorrect) && (
                   <p className="mb-2 text-red-600">
-                    Set a quantity value between {minItems} and {maxItems}.
+                    Quantity can only be values between {minItems} and{' '}
+                    {maxItems}.
                   </p>
                 )}
                 {isFull && (
                   <p className="mb-2 text-red-600">
-                    The max is {maxItems} units of this item.
+                    The max is {maxItems} units of this item in the cart.
                   </p>
                 )}
 

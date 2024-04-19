@@ -15,10 +15,7 @@ const MainBody = (props) => {
   }, [itemsCart, setCartCounter])
 
   return (
-    <main
-      data-testid="main"
-      className="z-0 flex w-full grow flex-col bg-gradient-to-r from-yellow-200 to-green-200"
-    >
+    <main data-testid="main" className="z-0 h-full w-full bg-white">
       <Outlet context={[itemsCart, setItemsCart, setCartCounter]} />
     </main>
   )

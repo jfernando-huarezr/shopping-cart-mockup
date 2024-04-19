@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import img from '../../assets/banner.jpeg'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   const navigateMarket = useNavigate()
@@ -9,27 +10,25 @@ const Home = () => {
   }
   return (
     <>
-      <section className="flex w-full items-center justify-center">
-        <div className="flex items-center justify-center gap-8 lg:w-[80%]">
-          <div className="mx-[1.7rem] my-[9.6rem] sm:w-[50%] lg:w-[40%]">
-            <h1>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              laborum hic cupiditate at possimus. Quam omnis accusamus alias
-              neque velit.
+      <section className="bg-white">
+        <div className="mx-auto grid max-w-screen-xl px-4 py-8 lg:grid-cols-12 lg:gap-8 lg:py-16 xl:gap-0">
+          <div className="mr-auto place-self-center lg:col-span-7">
+            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl ">
+              The best store in the world!
             </h1>
-            <button
-              onClick={handleButtonHome}
-              className="rounded-lg bg-gray-300 px-5 py-2 hover:bg-blue-400"
+            <p className="mb-6 max-w-2xl font-light text-gray-500 md:text-lg lg:mb-8 lg:text-xl">
+              You will find anything you need here, take a look!
+            </p>
+
+            <Link
+              to="marketplace"
+              className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
             >
-              im a great button
-            </button>
+              Start shopping
+            </Link>
           </div>
-          <div className="justify relative mx-5 my-7 flex items-center justify-center">
-            <img
-              className="h-auto max-w-full overflow-hidden rounded-full object-cover lg:max-w-[70%]"
-              src={img}
-              alt=""
-            />
+          <div className="hidden lg:col-span-5 lg:mt-0 lg:flex">
+            <img src={img} alt="mockup" />
           </div>
         </div>
       </section>
