@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import useComponentVisible from '../../hooks/useComponentVisible'
+import bannerImg from '../../assets/shopping-store.png'
+import { PropTypes } from 'prop-types'
 
 const Header = ({ cartCounter }) => {
   const { ref, isComponentVisible, setIsComponentVisible } =
@@ -16,7 +18,7 @@ const Header = ({ cartCounter }) => {
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
           <Link to="/" className="flex items-center">
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
+              src={bannerImg}
               className="mr-3 h-6 sm:h-9"
               alt="Flowbite Logo"
             />
@@ -145,6 +147,10 @@ const Header = ({ cartCounter }) => {
       </div>
     </header>
   )
+}
+
+Header.propTypes = {
+  cartCounter: PropTypes.number,
 }
 
 export default Header

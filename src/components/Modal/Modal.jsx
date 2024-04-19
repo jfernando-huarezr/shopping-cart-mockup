@@ -1,3 +1,5 @@
+import { PropTypes } from 'prop-types'
+
 const Modal = ({ children }) => {
   return (
     <dialog
@@ -6,6 +8,10 @@ const Modal = ({ children }) => {
       {children}
     </dialog>
   )
+}
+
+Modal.propTypes = {
+  children: PropTypes.element,
 }
 
 export default Modal

@@ -1,6 +1,8 @@
+import { PropTypes } from 'prop-types'
+
 const Subtotal = ({ subtotal }) => {
   return (
-    <div className="bg-white p-3">
+    <div className="sticky bg-white p-3 lg:top-[80px] ">
       <div className="flex items-center justify-between border-gray-200 pb-3 md:flex-row md:items-center lg:mx-auto lg:max-w-lg lg:px-6">
         <h5 className="font-manrope w-full text-2xl font-semibold leading-9 text-gray-900">
           Subtotal
@@ -22,6 +24,10 @@ const Subtotal = ({ subtotal }) => {
       </div>
     </div>
   )
+}
+
+Subtotal.propTypes = {
+  subtotal: PropTypes.number,
 }
 
 export default Subtotal

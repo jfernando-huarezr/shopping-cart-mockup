@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Modal from '../Modal/Modal'
 import useComponentVisible from '../../hooks/useComponentVisible'
-import { type } from '@testing-library/user-event/dist/cjs/utility/type.js'
+import { PropTypes } from 'prop-types'
 
 const ProductCard = (props) => {
   const detail = props.detail
@@ -230,6 +230,12 @@ const ProductCard = (props) => {
       </div>
     </div>
   )
+}
+
+ProductCard.propTypes = {
+  detail: PropTypes.object,
+  itemsCart: PropTypes.array,
+  setItemsCart: PropTypes.func,
 }
 
 export default ProductCard

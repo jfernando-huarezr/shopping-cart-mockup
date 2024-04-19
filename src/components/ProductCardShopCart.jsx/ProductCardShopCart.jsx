@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
+import { PropTypes } from 'prop-types'
 
 const ProductCardShopCart = (props) => {
   const element = props.element
   const updateCartItem = props.updateCartItem
 
   const maxItems = 25
-  const minItems = 1
+  //const minItems = 1
 
   const [quantity, setQuantity] = useState(element.quantity)
   const [isIncorrect, setIsIncorrect] = useState(false)
@@ -33,7 +34,7 @@ const ProductCardShopCart = (props) => {
   }
 
   useEffect(() => {
-    console.log(quantity)
+    //console.log(quantity)
     updateCartItem(element.id, quantity)
   }, [quantity, element.id, quantity])
 
@@ -146,6 +147,11 @@ const ProductCardShopCart = (props) => {
       </div>
     </div>
   )
+}
+
+ProductCardShopCart.propTypes = {
+  element: PropTypes.object,
+  updateCartItem: PropTypes.func,
 }
 
 export default ProductCardShopCart

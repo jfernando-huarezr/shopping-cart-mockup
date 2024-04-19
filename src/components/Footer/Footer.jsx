@@ -1,3 +1,5 @@
+import bannerImg from '../../assets/shopping-store.png'
+
 const Footer = () => {
   return (
     <footer data-testid="footer" className="bg-white dark:bg-gray-900">
@@ -5,11 +7,7 @@ const Footer = () => {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <a href="https://flowbite.com/" className="flex items-center">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="me-3 h-8"
-                alt="FlowBite Logo"
-              />
+              <img src={bannerImg} className="me-3 h-8" alt="FlowBite Logo" />
               <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
                 Tambo
               </span>
@@ -51,10 +49,11 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://discord.gg/4eeurUVvTy"
-                    className="hover:underline"
+                    href="https://www.flaticon.es/iconos-gratis/comprar"
+                    className="hover:underline "
+                    title="comprar iconos"
                   >
-                    Discord
+                    Flaticon
                   </a>
                 </li>
               </ul>

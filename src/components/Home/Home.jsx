@@ -1,13 +1,7 @@
-import { useNavigate } from 'react-router-dom'
 import img from '../../assets/banner.jpeg'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
-  const navigateMarket = useNavigate()
-
-  const handleButtonHome = () => {
-    navigateMarket('/marketplace')
-  }
   return (
     <>
       <section className="bg-white">

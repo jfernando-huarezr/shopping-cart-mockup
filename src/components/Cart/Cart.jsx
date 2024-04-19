@@ -47,7 +47,7 @@ const Cart = () => {
             />
           ))}
         </div>
-        <div className="col-span-12 lg:col-span-4">
+        <div className="sticky bottom-0 col-span-12 lg:col-span-4 ">
           <Subtotal subtotal={subtotal} />
         </div>
       </div>
@@ -69,7 +69,7 @@ const Cart = () => {
           to="/marketplace"
           className="rounded-md bg-blue-500 px-6 py-2 text-white shadow-md transition-colors duration-300 hover:bg-blue-600"
         >
-          Let's go shopping!
+          Let&apos;s go shopping!
         </Link>
       </div>
     </div>
