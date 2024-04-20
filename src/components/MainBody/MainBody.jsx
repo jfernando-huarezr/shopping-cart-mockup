@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { PropTypes } from 'prop-types'
+import { CartContext } from '../../App'
 
-const MainBody = (props) => {
-  const setCartCounter = props.setCartCounter
+const MainBody = () => {
+  const { setCartCounter } = useContext(CartContext)
   const [itemsCart, setItemsCart] = useState([])
 
   useEffect(() => {

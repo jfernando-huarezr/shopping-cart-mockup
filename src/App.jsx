@@ -4,7 +4,7 @@ import MainBody from './components/MainBody/MainBody'
 import { useState } from 'react'
 import { createContext } from 'react'
 
-const CartContext = createContext({
+export const CartContext = createContext({
   cartCounter: 0,
   setCartCounter: () => {},
 })

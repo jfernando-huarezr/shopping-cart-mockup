@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom'
 import useComponentVisible from '../../hooks/useComponentVisible'
 import bannerImg from '../../assets/shopping-store.png'
 import { PropTypes } from 'prop-types'
+import { useContext } from 'react'
+import { CartContext } from '../../App'
 
-const Header = ({ cartCounter }) => {
+const Header = () => {
+  const { cartCounter } = useContext(CartContext)
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false)
 
