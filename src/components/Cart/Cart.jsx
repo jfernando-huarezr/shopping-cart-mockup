@@ -1,17 +1,11 @@
 import { useOutletContext } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import ProductCardShopCart from '../ProductCardShopCart.jsx/ProductCardShopCart'
 import Subtotal from '../Subtotal/Subtotal'
 import { Link } from 'react-router-dom'
 
 const Cart = () => {
   const [itemsCart, setItemsCart] = useOutletContext()
-  const [subtotal, setSubtotal] = useState(
-    itemsCart.reduce(
-      (acc, element) => acc + element.quantity * element.price,
-      0,
-    ),
-  )
 
   const updateCartItem = (itemId, newQuantity) => {
     const updatedCart =
@@ -24,12 +18,11 @@ const Cart = () => {
     setItemsCart(updatedCart)
   }
 
-  useEffect(() => {
-    const newSubtotal = itemsCart.reduce(
+  const subtotal = useMemo(() => {
+    return itemsCart.reduce(
       (acc, element) => acc + element.quantity * element.price,
       0,
     )
-    setSubtotal(newSubtotal)
   }, [itemsCart])
 
   return itemsCart.length ? (
