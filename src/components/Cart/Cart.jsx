@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom'
-import { useState, useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import ProductCardShopCart from '../ProductCardShopCart.jsx/ProductCardShopCart'
 import Subtotal from '../Subtotal/Subtotal'
 import { Link } from 'react-router-dom'
